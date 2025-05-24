@@ -7,107 +7,87 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #f9f9f9;
+      background: #f5f5f5;
       color: #333;
-    }
-    header {
-      background-color: #ffffff;
-      padding: 20px;
       text-align: center;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      padding: 20px;
     }
     h1 {
-      margin: 0;
-      font-size: 2.5em;
+      color: #2c3e50;
     }
-    nav {
-      text-align: center;
+    .matiere {
+      display: inline-block;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      padding: 20px;
+      margin: 10px;
+      width: 250px;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+    .matiere:hover {
+      transform: scale(1.05);
+    }
+    .formulaire {
+      display: none;
+      margin-top: 20px;
+    }
+    form {
       margin-top: 10px;
     }
-    nav a {
-      margin: 0 15px;
-      text-decoration: none;
-      color: #0077cc;
+    input[type="email"] {
+      padding: 8px;
+      width: 250px;
+      margin: 5px 0;
     }
-    .container {
-      max-width: 1000px;
-      margin: 40px auto;
-      padding: 20px;
-    }
-    .fiche {
-      background-color: #fff;
-      padding: 20px;
-      margin-bottom: 20px;
-      border-radius: 8px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    }
-    .fiche h2 {
-      margin-top: 0;
-    }
-    .buy-btn {
-      display: inline-block;
-      background-color: #0077cc;
-      color: white;
+    button, .paypal-button {
+      background-color: #ffc439;
+      border: none;
       padding: 10px 15px;
       border-radius: 5px;
-      text-decoration: none;
-      margin-top: 10px;
+      cursor: pointer;
+      font-weight: bold;
     }
-    footer {
-      text-align: center;
-      padding: 20px;
-      font-size: 0.9em;
-      color: #999;
+    .paypal-button {
+      margin-top: 10px;
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>FichesBac+</h1>
-    <p>Des fiches claires et efficaces pour réussir le bac</p>
-    <nav>
-      <a href="#maths">Maths</a>
-      <a href="#physique">Physique</a>
-      <a href="#svt">SVT</a>
-      <a href="#philo">Philo</a>
-      <a href="#francais">Français</a>
-      <a href="#histoire">Histoire</a>
-      <a href="#langues">Langues</a>
-      <a href="#grandoral">Grand Oral</a>
-    </nav>
-  </header>
 
-  <div class="container">
-    <section id="maths" class="fiche">
-      <h2>Maths - Pack complet</h2>
-      <p>Contient tous les chapitres au format PDF et Word.</p>
-      <a href="https://paypal.me/TONLIENPAYPAL/10" class="buy-btn">Acheter - 10€</a>
-    </section>
-    <section class="fiche">
-      <h2>Maths - Dérivation</h2>
-      <p>Fiche claire et complète sur les dérivées (PDF/Word).</p>
-      <a href="https://paypal.me/TONLIENPAYPAL/1.5" class="buy-btn">Acheter - 1,50€</a>
-    </section>
+  <h1>Bienvenue sur FichesBac+</h1>
+  <p>Clique sur la matière de ton choix :</p>
 
-    <section id="physique" class="fiche">
-      <h2>Physique - Pack complet</h2>
-      <p>Cours complet avec illustrations et formules.</p>
-      <a href="https://paypal.me/TONLIENPAYPAL/10" class="buy-btn">Acheter - 10€</a>
-    </section>
-
-    <!-- Répète pour SVT, Philo, Français, Histoire, Anglais, Espagnol, Grand Oral -->
-
-    <section id="grandoral" class="fiche">
-      <h2>Grand Oral - Préparation complète</h2>
-      <p>Fiches sur la méthode, structure, sujets types.</p>
-      <a href="https://paypal.me/TONLIENPAYPAL/10" class="buy-btn">Acheter - 10€</a>
-    </section>
+  <div id="matieres">
+    <div class="matiere" onclick="afficherForm('Français')">Français</div>
+    <div class="matiere" onclick="afficherForm('Mathématiques')">Mathématiques</div>
+    <div class="matiere" onclick="afficherForm('Physique-Chimie')">Physique-Chimie</div>
+    <div class="matiere" onclick="afficherForm('SVT')">SVT</div>
+    <div class="matiere" onclick="afficherForm('Philosophie')">Philosophie</div>
+    <div class="matiere" onclick="afficherForm('Grand Oral')">Grand Oral</div>
   </div>
 
-  <footer>
-    <p>&copy; 2025 FichesBac+ - Tous droits réservés</p>
-  </footer>
+  <div class="formulaire" id="formulaire">
+    <h2 id="titre-matiere"></h2>
+    <form action="https://formsubmit.co/tonadresse@mail.com" method="POST">
+      <input type="hidden" name="_subject" id="subject">
+      <input type="hidden" name="matiere" id="matiere">
+      <input type="email" name="email" placeholder="Ton adresse e-mail" required><br>
+      <button type="submit">Recevoir mes fiches</button>
+    </form>
+    <a class="paypal-button" id="paypal-link" target="_blank">Payer 10€ via PayPal</a>
+  </div>
+
+  <script>
+    function afficherForm(matiere) {
+      document.getElementById('formulaire').style.display = 'block';
+      document.getElementById('titre-matiere').innerText = 'Fiches de ' + matiere;
+      document.getElementById('subject').value = 'Nouvelle commande : ' + matiere;
+      document.getElementById('matiere').value = matiere;
+      document.getElementById('paypal-link').href = 'https://www.paypal.com/paypalme/TONPSEUDO/10';
+    }
+  </script>
+
 </body>
 </html>
