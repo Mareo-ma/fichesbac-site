@@ -7,7 +7,7 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      background: #f5f5f5;
+      background: #e6f2ff;
       color: #333;
       text-align: center;
       padding: 20px;
@@ -32,6 +32,10 @@
     .formulaire {
       display: none;
       margin-top: 20px;
+      background: #fff;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
     form {
       margin-top: 10px;
@@ -40,6 +44,11 @@
       padding: 8px;
       width: 250px;
       margin: 5px 0;
+    }
+    .checkboxes label {
+      display: block;
+      text-align: left;
+      margin-left: 20%;
     }
     button, .paypal-button {
       background-color: #ffc439;
@@ -51,6 +60,7 @@
     }
     .paypal-button {
       margin-top: 10px;
+      display: inline-block;
     }
   </style>
 </head>
@@ -70,22 +80,76 @@
 
   <div class="formulaire" id="formulaire">
     <h2 id="titre-matiere"></h2>
-    <form action="https://formsubmit.co/tonadresse@mail.com" method="POST">
+    <form action="https://formsubmit.co/matheo.maria08@gmail.com" method="POST">
       <input type="hidden" name="_subject" id="subject">
       <input type="hidden" name="matiere" id="matiere">
+      <div class="checkboxes" id="options"></div>
       <input type="email" name="email" placeholder="Ton adresse e-mail" required><br>
-      <button type="submit">Recevoir mes fiches</button>
+      <button type="submit">Envoyer la demande</button>
     </form>
-    <a class="paypal-button" id="paypal-link" target="_blank">Payer 10€ via PayPal</a>
+    <a class="paypal-button" id="paypal-link" target="_blank">Payer via PayPal</a>
   </div>
 
   <script>
+    const optionsParMatiere = {
+      "Français": [
+        "Méthodo (dissertation + commentaire de texte) - 5€",
+        "Arthur RIMBAUD - Les Cahiers de DOUAI - 3€",
+        "Honoré DE BALZAC - La Peau De Chagrin - 3€",
+        "Olympe DE GOUGES - La DDFC - 3€",
+        "Jean-Luc LAGARCE - Juste La Fin Du Monde - 3€"
+      ],
+      "Mathématiques": [
+        "Programme 2nde - 10€",
+        "Programme 1ère spé - 10€",
+        "Programme Terminale spé - 10€",
+        "Programme Maths expertes - 10€"
+      ],
+      "Physique-Chimie": [
+        "Programme 2nde - 10€",
+        "Programme 1ère spé - 10€",
+        "Programme Terminale spé - 10€"
+      ],
+      "SVT": [
+        "Programme 2nde - 10€",
+        "Programme 1ère spé - 10€",
+        "Programme Terminale spé - 10€"
+      ],
+      "Philosophie": [
+        "Méthodologie - 5€",
+        "Cours sur toutes les notions - 10€"
+      ],
+      "Grand Oral": [
+        "Sujets par spécialité - 2€",
+        "Méthodo - 2€",
+        "Questions récurrentes - 2€"
+      ]
+    };
+
     function afficherForm(matiere) {
-      document.getElementById('formulaire').style.display = 'block';
-      document.getElementById('titre-matiere').innerText = 'Fiches de ' + matiere;
+      const form = document.getElementById('formulaire');
+      const titre = document.getElementById('titre-matiere');
+      const optionsDiv = document.getElementById('options');
+      form.style.display = 'block';
+      titre.innerText = 'Fiches de ' + matiere;
       document.getElementById('subject').value = 'Nouvelle commande : ' + matiere;
       document.getElementById('matiere').value = matiere;
-      document.getElementById('paypal-link').href = 'https://www.paypal.com/paypalme/TONPSEUDO/10';
+      
+      // Générer les options
+      optionsDiv.innerHTML = '';
+      optionsParMatiere[matiere].forEach(option => {
+        const label = document.createElement('label');
+        const input = document.createElement('input');
+        input.type = 'checkbox';
+        input.name = 'choix';
+        input.value = option;
+        label.appendChild(input);
+        label.appendChild(document.createTextNode(' ' + option));
+        optionsDiv.appendChild(label);
+      });
+
+      // Lien Paypal général
+      document.getElementById('paypal-link').href = 'https://www.paypal.com/paypalme/Mathéo MARIA';
     }
   </script>
 
